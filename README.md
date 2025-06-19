@@ -1,1 +1,1 @@
-# shoptimizerAI
+# SmartCart
