@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CNZ</title>
+
+  </head>
+  <body>
+    <main>
+      <section>
+        <div>
+          <h1>
+            CNZ Shopping
+                    </h1>
+
+          <br />
+          <form>
+            <div>
+              <div>
+                <div class="field">
+                  <label for="compact1" class="label"
+                    >Ask the bot anything you want.</label
+                  >
+                  <input
+                    id="user-input"
+                    class="input is-primary"
+                    type="text"
+                    name="user_input"
+                    placeholder="Type your message here"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <button class="button is-primary" onclick="getBotResponse(event)">
+                            Send
+            </button>
+          </form>
+
+          <div id="response-box"></div>
+        </div>
+      </section>
+    </main>
+    <script>
+      function getBotResponse(event) {
+        event.preventDefault();
+        const userInput = document.getElementById("user-input").value;
+        fetch("/get_response", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ user_input: userInput }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById("response-box").innerHTML = data.response;
+          });
+      }
+    </script>
+  </body>
+</html>
