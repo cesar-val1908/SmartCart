@@ -1,6 +1,6 @@
 services:
   web:
-    container_name: openai-flask-starter
+    container_name: CNZ-Shopping
     build:
       context: .
       dockerfile: Dockerfile
