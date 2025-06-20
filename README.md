@@ -1,1 +1,1 @@
-# SmartCart
+# CNZ Shopping
