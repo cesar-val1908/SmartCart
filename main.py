@@ -2,14 +2,9 @@ import os
 from flask import Flask, jsonify, render_template, request, session # Import session
 from openai import OpenAI
 
-# It's good practice to get API key from environment variables
-# client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY")) 
-client = OpenAI() # Assuming it picks from OPENAI_API_KEY env var
-
+client = OpenAI() 
 
 app = Flask(__name__)
-app.secret_key = 'your_very_secret_key_here' # Needed for Flask sessions! Change this in production.
-
 
 def ai_bot_response(user_message, conversation_history):
     ai_prompt = """
@@ -45,7 +40,7 @@ Ask the user if these options meet their needs or if they'd like more suggestion
     messages.append({"role": "user", "content": user_message})
 
     response = client.chat.completions.create(
-        model="gpt-4o-mini-search-preview-2025-03-11", # Make sure this model is suitable and available
+        model="gpt-4o-mini-search-preview-2025-03-11", 
         messages=messages,
         max_tokens=100,
     )
