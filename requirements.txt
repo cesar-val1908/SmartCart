@@ -2,3 +2,6 @@ openai
 flask
 flask-script
 gunicorn
+requests
+python-dotenv
+textblob
