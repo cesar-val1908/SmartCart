@@ -4,6 +4,7 @@ from flask import Flask, jsonify, render_template, request
 from openai import OpenAI
 
 import apis
+from apis.review_summarizing import get_review_summary_for_product
 
 
 app = Flask(__name__)
