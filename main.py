@@ -2,6 +2,11 @@ import os
 
 from flask import Flask, jsonify, render_template, request
 from openai import OpenAI
+from waitress import serve
+from dotenv import load_dotenv
+
+load_dotenv()
+OpenAI.api_key = os.getenv("OPENAI_API_KEY")
 
 app = Flask(__name__)
 
@@ -35,4 +40,5 @@ def get_response():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=os.getenv("HTTP_PORT", 5000))
+    # app.run(debug=True, port=os.getenv("HTTP_PORT", 5000))
+    serve(app, host='0.0.0.0', port=8000)
