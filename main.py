@@ -12,18 +12,43 @@ app = Flask(__name__)
 
 client = OpenAI()
 
+tools = [
+    {
+        "type": "web_search_preview"
+    }
+]
+
+conversation_history = []
 
 def ai_bot_response(prompt):
-    response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": prompt},
-        ],
-        max_tokens=100,
-        temperature=0.7,
+    
+    conversation_history.append(
+        {
+        "role": "user",
+        "content": prompt
+        }
     )
-    return response.choices[0].message.content.strip()
+
+    response = client.responses.create(
+
+        model="gpt-4o-mini",
+        input = [
+            {
+                "role": "system", 
+                "content": "Customer service helper"
+            },
+            *conversation_history
+        ],  
+        tools = tools,                              #Allows openAI to explore the web
+    )
+
+    conversation_history.append(
+        {
+        "role": "assistant",
+        "content": response.output_text
+        }
+    )
+    return response.output_text
 
 
 @app.route("/")
@@ -40,5 +65,4 @@ def get_response():
 
 
 if __name__ == "__main__":
-    # app.run(debug=True, port=os.getenv("HTTP_PORT", 5000))
     serve(app, host='0.0.0.0', port=8000)
