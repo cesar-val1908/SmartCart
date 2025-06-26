@@ -1,10 +1,12 @@
 import os
 from flask import Flask, jsonify, render_template, request, session # Import session
 from openai import OpenAI
+from waitress import serve
 
 client = OpenAI() 
 
 app = Flask(__name__)
+app.secret_key = os.urandom(24)
 
 def ai_bot_response(user_message, conversation_history):
     ai_prompt = """
@@ -26,7 +28,7 @@ After gathering 2-4 key pieces of information, conduct a targeted search. Presen
 * **User Rating**
 * **A concise reason** why it's a good fit.
 
-Ask the user if these options meet their needs or if they'd like more suggestions.
+Ask the user if these options meet their needs or if they'd like more suggestions, and make sure that you don't repeat questions.
 
     """
     
@@ -77,4 +79,4 @@ def get_response():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=os.getenv("HTTP_PORT", 5000))
+    serve(app, host="0.0.0.0", port=8000)
