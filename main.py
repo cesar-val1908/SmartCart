@@ -50,7 +50,7 @@ Finally, ask the user if these options meet their needs or if they'd like more s
     """
     
     
-    messages = [{"role": "system", "content": ai_prompt}]
+    messages = [{"role": "system", "content": ai_prompt},*conversation_history]
     messages.extend(conversation_history) 
     messages.append({"role": "user", "content": user_message})
 
@@ -62,8 +62,8 @@ Finally, ask the user if these options meet their needs or if they'd like more s
     
     response = client.responses.create(
         model="gpt-4o-mini", 
-        input=messages, # Using 'input' for client.responses.create as per your code
-        max_output_tokens=100,
+        input=messages,
+        max_output_tokens=1000,
         tools = tools,
     )
     print("OpenAI API Raw Response:", response) # Keep this for detailed debugging
