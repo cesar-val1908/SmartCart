@@ -6,4 +6,3 @@ gunicorn
 requests
 python-dotenv
 textblob
-flask-cors
