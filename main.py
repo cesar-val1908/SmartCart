@@ -1,8 +1,9 @@
 import os
-from flask import Flask, jsonify, render_template, request, session 
+from flask import Flask, jsonify, request, session 
 from openai import OpenAI
 from waitress import serve
 from dotenv import load_dotenv
+from flask_cors import CORS
 
 load_dotenv()
 
@@ -12,17 +13,17 @@ client = OpenAI(
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24) 
+CORS(app) # Enable CORS for all routes
 
-with open('ai_prompt.txt', 'r', encoding='utf-8') as file:
+with open('prompts/chatbot.txt', 'r', encoding='utf-8') as file:
     prompt = file.read()   
 
 def ai_bot_response(user_message, conversation_history):
-    ai_prompt = prompt
     
     messages = [
         {
         "role": "system",
-        "content": ai_prompt
+        "content": prompt
         },
         *conversation_history
     ]
@@ -44,12 +45,6 @@ def ai_bot_response(user_message, conversation_history):
     )
     print("OpenAI API Raw Response:", response) # Keep this for detailed debugging
     return response.output_text
-
-
-@app.route("/")
-def home():
-    session['conversation_history'] = []
-    return render_template("index.html")
 
 
 @app.route("/get_response", methods=["POST"])
