@@ -58,7 +58,9 @@ function getBotResponse(event) {
     if (questionData.options && questionData.options.length > 0) {
       htmlContent += `<p><strong>Options:</strong></p><ul>`;
       questionData.options.forEach(option => {
-        htmlContent += `<li>${option}</li>`;
+        // htmlContent += `<li>${option}</li>`;
+        htmlContent += `<input type="radio" name="answer" value="${option}"> <label>${option}</label><br>
+        <label for="answer">${option}</label><br>`
       });
       htmlContent += `</ul>`;
     }
