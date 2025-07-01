@@ -14,4 +14,4 @@ python -m pip install -r requirements.txt
 
 export $(grep -v '^#' .env | xargs)
 
-gunicorn -w 4 main:app --bind 0.0.0.0:$HTTP_PORT
+waitress-serve --listen=0.0.0.0:$PORT main:app
