@@ -1,63 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CNZ Chatbot</title>
-    <link rel="stylesheet" href="/static/styles/custom.css" />
-  </head>
-  <body>
-    <div class="chat-container">
-      <div class="chat-header">
-        <h1>CNZ-Shopping Chatbot</h1>
-      </div>
-      <div class="chat-messages" id="chat-messages">
-        <!-- Messages will be loaded here -->
-      </div>
-      <div class="chat-input-area">
-        <input
-          id="user-input"
-          type="text"
-          placeholder="Type your message here..."
-        />
-        <button onclick="getBotResponse(event)">Send</button>
-      </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CNZ Chatbot</title>
+  <link rel="stylesheet" href="static/styles/style.css" />
+</head>
+
+<body>
+  <div class="chat-header">
+    <div class="navbar">
+      <button class="nav-btn active">
+        <span class="icon">&#x1F4AC;</span> Chat
+      </button>
+      <button class="nav-btn">
+        <span class="icon">&#x2194;</span> Compare
+      </button>
+      <button class="nav-btn">
+        <span class="icon">&#x1F4E6;</span> Bundles
+      </button>
     </div>
+  </div>
+  <div class="chat-container">
 
-    <script>
-      function getBotResponse(event) {
-        event.preventDefault();
-        const userInputField = document.getElementById("user-input");
-        const userMessage = userInputField.value;
+    <div class="chat-messages" id="chat-messages">
+      <!-- Messages will be loaded here -->
+    </div>
+    <div class="chat-input-area">
+      <div class="input-wrapper">
+        <input id="user-input" type="text" placeholder="Search for a product" />
+        <span class="search-icon">&#x1F50D;</span>
+      </div>
+      <button onclick="getBotResponse(event)">
+        <span class="send-icon">&#x25B6;</span> Send
+      </button>
+    </div>
+  </div>
 
-        if (userMessage.trim() === "") return;
 
-        appendMessage("user", userMessage);
-        userInputField.value = ""; // Clear input after sending
+  <script src="static/chatbot.js"></script>
 
-        fetch("/get_response", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ user_input: userMessage }),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            appendMessage("bot", data.response);
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-            appendMessage("bot", "Sorry, something went wrong.");
-          });
-      }
+</body>
 
-      function appendMessage(sender, text) {
-        const chatMessages = document.getElementById("chat-messages");
-        const messageElement = document.createElement("div");
-        messageElement.classList.add("chat-message", `${sender}-message`);
-        messageElement.innerHTML = `<p>${text}</p>`;
-        chatMessages.appendChild(messageElement);
-        chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
-      }
-    </script>
-  </body>
 </html>
