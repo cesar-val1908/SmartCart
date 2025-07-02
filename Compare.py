@@ -9,8 +9,8 @@ client = OpenAI(
 )
 
 
-with open('prompt_compare.txt', 'r', encoding='utf-8') as file:
-    prompt = file.read()   
+with open('prompts/compare.txt', 'r', encoding='utf-8') as file:
+    prompt = file.read()  
 
 conversation_history = []
 
