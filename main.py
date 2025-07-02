@@ -13,8 +13,9 @@ client = OpenAI(
 app = Flask(__name__)
 app.secret_key = os.urandom(24) 
 
-with open('ai_prompt.txt', 'r', encoding='utf-8') as file:
+with open('prompt_chatbot.txt', 'r', encoding='utf-8') as file:
     prompt = file.read()   
+
 
 def ai_bot_response(user_message, conversation_history):
     ai_prompt = prompt
