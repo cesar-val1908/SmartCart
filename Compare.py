@@ -10,7 +10,7 @@ client = OpenAI(
 
 
 with open('prompts/compare.txt', 'r', encoding='utf-8') as file:
-    prompt = file.read()  
+    prompt = file.read()   
 
 conversation_history = []
 
@@ -35,7 +35,7 @@ def ai_bot_response(user_message):
     ]
     
     response = client.responses.create(
-        model="gpt-4o-mini", 
+        model="gpt-4o-mini",  #****Change to gpt-4o to get the full accuracy of the model****
         input=messages,
         max_output_tokens=10000,
         tools = tools,
